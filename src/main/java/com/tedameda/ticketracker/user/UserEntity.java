@@ -1,12 +1,13 @@
 package com.tedameda.ticketracker.user;
 
+import com.tedameda.ticketracker.department.DepartmentEntity;
+import com.tedameda.ticketracker.ticket.TicketEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -37,6 +38,12 @@ public class UserEntity {
     private String mobileNumber;
     @Column(name = "user_location", nullable = false)
     private String location;
-    @Column(name = "users_roles")
-    private Set<String> role;
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    private DepartmentEntity department;
+    private UserPermission permission = UserPermission.CREATE_TICKET;
+    @OneToMany(mappedBy = "createdBy")
+    private Set<TicketEntity> ticket;
+    @OneToMany(mappedBy = "assignToUser")
+    private Set<TicketEntity> assignedTickets;
 }

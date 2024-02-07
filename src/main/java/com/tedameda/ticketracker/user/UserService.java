@@ -1,8 +1,12 @@
 package com.tedameda.ticketracker.user;
 
+import com.tedameda.ticketracker.department.DepartmentRepository;
+import com.tedameda.ticketracker.department.DepartmentService;
 import com.tedameda.ticketracker.user.dto.CreateUserRequest;
 import com.tedameda.ticketracker.user.dto.UpdateRolesRequest;
+import lombok.NonNull;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,6 +20,8 @@ import java.util.Set;
 public class UserService {
     UserRepository userRepository;
     ModelMapper modelMapper;
+    @Autowired
+    DepartmentService departmentService;
 
     public UserService(UserRepository userRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
@@ -29,26 +35,8 @@ public class UserService {
 
     public UserEntity createUser(CreateUserRequest request){
         UserEntity user = modelMapper.map(request, UserEntity.class);
+        user.setDepartment(departmentService.findDepartmentByName(request.getDepartment()));
         return userRepository.save(user);
-    }
-    //TODO: Fix role update functionality
-    public UserEntity addUserRole(Long userId, UpdateRolesRequest request){
-        UserEntity user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
-        if (user.getRole()==null){
-            user.setRole(new HashSet<>());
-        }
-        user.getRole().addAll(request.getRoles());
-        Set<String> s = user.getRole();
-        for(var it :s ) {
-            System.out.println(it);
-        }
-        return user;
-    }
-
-    public UserEntity removeUserRole(Long userId, UpdateRolesRequest request){
-        UserEntity user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
-        user.getRole().removeAll(request.getRoles());
-        return user;
     }
 
     static class UserNotFoundException extends IllegalArgumentException{

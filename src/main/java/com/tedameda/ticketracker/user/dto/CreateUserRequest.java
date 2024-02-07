@@ -24,4 +24,6 @@ public class CreateUserRequest {
     private String mobileNumber;
     @NonNull
     private String location;
+    @NonNull
+    private String department;
 }
