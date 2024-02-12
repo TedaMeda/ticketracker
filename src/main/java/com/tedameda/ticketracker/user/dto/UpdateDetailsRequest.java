@@ -1,28 +1,27 @@
 package com.tedameda.ticketracker.user.dto;
 
+import com.tedameda.ticketracker.department.DepartmentEntity;
 import com.tedameda.ticketracker.user.UserPermission;
 import jakarta.annotation.Nullable;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 /**
  * @author TedaMeda
- * @since 2/6/2024
+ * @since 2/12/2024
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CreateUserRequest {
+public class UpdateDetailsRequest {
     @Nullable
     private String countryCode;
     @Nullable
     private String mobileNumber;
-    @NonNull
+    @Nullable
     private String location;
-    @NonNull
+    @Nullable
     private String department;
-    @NonNull
+    @Nullable
     private UserPermission permission;
 }

@@ -15,10 +15,11 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class CreateTicketRequest {
     @NonNull
+    private String createdByUser;
+    @NonNull
     private String title;
     @NonNull
     private String description;
-
     //TODO
     @NonNull
     private RequestType requestType;

@@ -1,11 +1,10 @@
 package com.tedameda.ticketracker.user.dto;
 
+import com.tedameda.ticketracker.user.UserPermission;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 /**
  * @author TedaMeda
@@ -15,11 +14,13 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatedUserResponse {
+public class UserResponse {
     private Long id;
     private String name;
     private String email;
     private String countryCode;
     private String mobileNumber;
     private String location;
+    private String permission;
+    private String Token;
 }

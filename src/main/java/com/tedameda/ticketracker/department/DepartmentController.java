@@ -14,6 +14,8 @@ import java.net.URI;
  * @author TedaMeda
  * @since 2/7/2024
  */
+/*
+
 @RestController
 @RequestMapping("/departments")
 public class DepartmentController {
@@ -32,3 +34,4 @@ public class DepartmentController {
         return ResponseEntity.created(uri).body(department);
     }
 }
+*/

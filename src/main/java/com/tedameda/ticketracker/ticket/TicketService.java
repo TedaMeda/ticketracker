@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
  * @author TedaMeda
  * @since 2/7/2024
  */
+/*
+
 @Service
 public class TicketService {
     TicketRepository ticketRepository;
@@ -19,10 +21,11 @@ public class TicketService {
         this.modelMapper = modelMapper;
     }
 
-    public TicketEntity createTicket(Long id, CreateTicketRequest request){
+    public TicketEntity createTicket(CreateTicketRequest request){
         var ticket = modelMapper.map(request, TicketEntity.class);
-        var createdByUser = userService.getUser(id);
+        var createdByUser = userService.getUser(request.getCreatedByUser());
         ticket.setCreatedBy(createdByUser);
         return ticket;
     }
 }
+*/

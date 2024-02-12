@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
  * @author TedaMeda
  * @since 2/7/2024
  */
+
 @Service
 public class DepartmentService {
     DepartmentRepository departmentRepository;
@@ -30,6 +31,7 @@ public class DepartmentService {
         return department;
     }
 
+    //EXCEPTIONS
     public static class DepartmentNotFoundException extends IllegalArgumentException{
         public DepartmentNotFoundException(String departmentName) {
             super("Department with name: " + departmentName + " not found");

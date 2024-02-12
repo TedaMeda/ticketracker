@@ -32,6 +32,8 @@ public class UserEntity {
     private String name;
     @Column(name = "user_email", nullable = false)
     private String email;
+    @Column(name = "password", nullable = false)
+    private String password;
     @Column(name = "country_code")
     private String countryCode;
     @Column(name = "mobile_number", length = 10)
@@ -41,7 +43,7 @@ public class UserEntity {
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private DepartmentEntity department;
-    private UserPermission permission = UserPermission.CREATE_TICKET;
+    private UserPermission permission;
     @OneToMany(mappedBy = "createdBy")
     private Set<TicketEntity> ticket;
     @OneToMany(mappedBy = "assignToUser")

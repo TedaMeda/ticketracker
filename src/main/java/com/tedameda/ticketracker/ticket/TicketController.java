@@ -13,8 +13,9 @@ import java.net.URI;
  */
 
 //TODO come up with API definitions
+    /*
 @RestController
-@RequestMapping("/users/{id}")
+@RequestMapping("/tickets")
 public class TicketController {
     TicketService ticketService;
     ModelMapper modelMapper;
@@ -24,10 +25,11 @@ public class TicketController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/create-ticket")
-    public ResponseEntity<TicketEntity> createTicket(@PathVariable(name = "id") Long createdByUser, @RequestBody CreateTicketRequest request){
-        var ticket = ticketService.createTicket(createdByUser, request);
+    @PostMapping("")
+    public ResponseEntity<TicketEntity> createTicket(@RequestBody CreateTicketRequest request){
+        var ticket = ticketService.createTicket(request);
         URI uri = URI.create("/tickets/"+ticket.getId());
         return ResponseEntity.created(uri).body(ticket);
     }
 }
+*/
