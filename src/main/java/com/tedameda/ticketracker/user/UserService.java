@@ -42,7 +42,7 @@ public class UserService {
     public UserEntity createUser(CreateUserRequest request) {
         UserEntity user = modelMapper.map(request, UserEntity.class);
         user.setPassword(passwordEncoder.encode("1#Password"));
-        user.setDepartment(departmentService.findDepartmentByName(request.getDepartment()));
+        user.setDepartment(departmentService.getDepartment(request.getDepartment()));
         return userRepository.save(user);
     }
 
@@ -85,7 +85,7 @@ public class UserService {
             user.setLocation(request.getLocation());
         }
         if (request.getDepartment() != null) {
-            user.setDepartment(departmentService.findDepartmentByName(request.getDepartment()));
+            user.setDepartment(departmentService.getDepartment(request.getDepartment()));
         }
         if (request.getPermission() != null) {
             user.setPermission(request.getPermission());

@@ -1,8 +1,10 @@
 package com.tedameda.ticketracker.ticket;
 
+import com.tedameda.ticketracker.department.DepartmentEntity;
 import com.tedameda.ticketracker.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -31,11 +33,31 @@ public class TicketEntity {
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private UserEntity createdBy;
+    @NonNull
     private String title;
+    @NonNull
     private String description;
-
-    //TODO think about alternative ways to write ENUM or convert it into table
     @Column(name = "request_type")
     private RequestType requestType;
+    @NonNull
     private TicketStatus status;
+    @OneToMany
+    @JoinColumn(name = "department_name", nullable = false)
+    private DepartmentEntity department;
+
+    public enum RequestType {
+        SOFTWARE_REQUEST,
+        HARDWARE_REQUEST,
+        CLOUD_SERVICE_REQUEST,
+        GITLAB_RESOURCE_REQUEST,
+        SEATING_CHANGE_REQUEST,
+        EMPLOYEE_VERIFICATION_REQUEST,
+        CREATE_CREDENTIAL_REQUEST;
+    }
+
+    public enum TicketStatus {
+        NOT_ASSIGNED,
+        ACTIVE,
+        CLOSED;
+    }
 }

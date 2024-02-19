@@ -1,7 +1,11 @@
 package com.tedameda.ticketracker.department;
 
+import com.tedameda.ticketracker.ticket.TicketEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NonNull;
+
+import java.util.Set;
 
 /**
  * @author TedaMeda
@@ -14,5 +18,8 @@ public class DepartmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @NonNull
     private String name;
+    @OneToMany(mappedBy = "department")
+    private Set<TicketEntity> tickets;
 }
