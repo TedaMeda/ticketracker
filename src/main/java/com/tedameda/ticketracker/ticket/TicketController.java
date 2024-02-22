@@ -1,8 +1,10 @@
 package com.tedameda.ticketracker.ticket;
 
 import com.tedameda.ticketracker.ticket.dto.CreateTicketRequest;
+import com.tedameda.ticketracker.user.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -13,7 +15,6 @@ import java.net.URI;
  */
 
 //TODO come up with API definitions
-    /*
 @RestController
 @RequestMapping("/tickets")
 public class TicketController {
@@ -26,10 +27,9 @@ public class TicketController {
     }
 
     @PostMapping("")
-    public ResponseEntity<TicketEntity> createTicket(@RequestBody CreateTicketRequest request){
-        var ticket = ticketService.createTicket(request);
+    public ResponseEntity<TicketEntity> createTicket(@RequestBody CreateTicketRequest request, @AuthenticationPrincipal UserEntity user){
+        var ticket = ticketService.createTicket(user.getId(), request);
         URI uri = URI.create("/tickets/"+ticket.getId());
         return ResponseEntity.created(uri).body(ticket);
     }
 }
-*/

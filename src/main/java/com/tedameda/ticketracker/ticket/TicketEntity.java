@@ -3,8 +3,12 @@ package com.tedameda.ticketracker.ticket;
 import com.tedameda.ticketracker.department.DepartmentEntity;
 import com.tedameda.ticketracker.user.UserEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -17,14 +21,16 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "ticket")
+@NoArgsConstructor
+@AllArgsConstructor
 public class TicketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_date")
     private Date createdDate;
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "last_modify_date")
     private Date lastModifyDate;
     @ManyToOne
@@ -37,27 +43,11 @@ public class TicketEntity {
     private String title;
     @NonNull
     private String description;
-    @Column(name = "request_type")
+    @Column(name = "request_type", nullable = false)
     private RequestType requestType;
     @NonNull
     private TicketStatus status;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "department_name", nullable = false)
     private DepartmentEntity department;
-
-    public enum RequestType {
-        SOFTWARE_REQUEST,
-        HARDWARE_REQUEST,
-        CLOUD_SERVICE_REQUEST,
-        GITLAB_RESOURCE_REQUEST,
-        SEATING_CHANGE_REQUEST,
-        EMPLOYEE_VERIFICATION_REQUEST,
-        CREATE_CREDENTIAL_REQUEST;
-    }
-
-    public enum TicketStatus {
-        NOT_ASSIGNED,
-        ACTIVE,
-        CLOSED;
-    }
 }

@@ -40,6 +40,8 @@ public class UserEntity {
     private String mobileNumber;
     @Column(name = "user_location", nullable = false)
     private String location;
+    @Column(name = "token", nullable = true)
+    private String token;
     @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
     private DepartmentEntity department;

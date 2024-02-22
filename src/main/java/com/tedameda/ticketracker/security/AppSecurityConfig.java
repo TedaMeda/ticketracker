@@ -20,6 +20,7 @@ public class AppSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/**","/departments/**").permitAll()
                 .anyRequest().authenticated()
         ).csrf(AbstractHttpConfigurer::disable).httpBasic(Customizer.withDefaults());
         return http.build();

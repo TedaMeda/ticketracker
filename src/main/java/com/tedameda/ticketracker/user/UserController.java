@@ -49,24 +49,21 @@ public class UserController {
     }
 
     @PutMapping("/update-password")
-    public ResponseEntity<UserResponse> updatePassword(@RequestBody UpdatePasswordRequest request, @AuthenticationPrincipal UserEntity user) {
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest request, @AuthenticationPrincipal UserEntity user) {
         var updatedUser = userService.updatePassword(request, user.getId());
-        UserResponse userResponse = modelMapper.map(updatedUser, UserResponse.class);
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok("Password Updated");
     }
 
     @PutMapping("/update-permission")
-    public ResponseEntity<UserResponse> updatePermission(@RequestBody UpdatePermissionRequest request, @AuthenticationPrincipal UserEntity user) {
+    public ResponseEntity<String> updatePermission(@RequestBody UpdatePermissionRequest request, @AuthenticationPrincipal UserEntity user) {
         UserEntity updatedUser = userService.changePermission(user.getId(), request);
-        UserResponse userResponse = modelMapper.map(updatedUser, UserResponse.class);
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok("Permission Updated");
     }
 
     @PutMapping("/update-user")
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UpdateDetailsRequest request, @AuthenticationPrincipal UserEntity user) {
+    public ResponseEntity<String> updateUser(@RequestBody UpdateDetailsRequest request, @AuthenticationPrincipal UserEntity user) {
         UserEntity updatedUser = userService.updateUser(user.getId(), request);
-        UserResponse userResponse = modelMapper.map(updatedUser, UserResponse.class);
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok("User details updated");
     }
 
     @ExceptionHandler({

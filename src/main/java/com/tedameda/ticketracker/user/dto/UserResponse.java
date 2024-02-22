@@ -22,5 +22,5 @@ public class UserResponse {
     private String mobileNumber;
     private String location;
     private String permission;
-    private String Token;
+    private String token;
 }

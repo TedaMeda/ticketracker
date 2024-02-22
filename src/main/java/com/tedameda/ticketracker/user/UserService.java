@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public UserEntity getUser(Long id) {
-        UserEntity user = userRepository.getReferenceById(id);
+        UserEntity user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
         return user;
     }
 

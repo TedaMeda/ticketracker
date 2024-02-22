@@ -15,6 +15,10 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {
+    @NonNull
+    private String name;
+    @NonNull
+    private String email;
     @Nullable
     private String countryCode;
     @Nullable

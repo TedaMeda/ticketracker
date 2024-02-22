@@ -1,6 +1,6 @@
 package com.tedameda.ticketracker.ticket.dto;
 
-import com.tedameda.ticketracker.ticket.TicketEntity;
+import com.tedameda.ticketracker.ticket.RequestType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,7 @@ public class CreateTicketRequest {
     @NonNull
     private String description;
     @NonNull
-    private TicketEntity.RequestType requestType;
+    private RequestType requestType;
+    @NonNull
+    private String department;
 }

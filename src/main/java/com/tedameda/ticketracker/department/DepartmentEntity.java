@@ -3,6 +3,7 @@ package com.tedameda.ticketracker.department;
 import com.tedameda.ticketracker.ticket.TicketEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "department")
+@NoArgsConstructor
 public class DepartmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
