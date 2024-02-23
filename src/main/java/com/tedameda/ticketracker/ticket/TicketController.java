@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 /**
  * @author TedaMeda
@@ -32,4 +33,19 @@ public class TicketController {
         URI uri = URI.create("/tickets/"+ticket.getId());
         return ResponseEntity.created(uri).body(ticket);
     }
+
+    @GetMapping("")
+    public ResponseEntity<List<TicketEntity>> getAllTickets(
+            @RequestParam(required = false) String departmentName,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        List<TicketEntity> tickets;
+        if(departmentName==null)
+             tickets = ticketService.getAllTickets(pageNo, pageSize);
+        else
+            tickets = ticketService.getTicketByDepartment(departmentName, pageNo, pageSize);
+        return ResponseEntity.ok(tickets);
+    }
+
 }
