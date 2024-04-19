@@ -5,8 +5,9 @@ package com.tedameda.ticketracker.user;
  * @since 2/7/2024
  */
 
-public enum UserPermission {
-    CREATE_TICKET,
-    CLOSE_TICKET,
-    ASSIGN_TICKET
+public enum Role {
+    USER,
+    ADMIN,
+    ADMIN_LEAD,
+    SUPER_ADMIN
 }

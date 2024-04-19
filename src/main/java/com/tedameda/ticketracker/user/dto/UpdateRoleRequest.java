@@ -1,6 +1,6 @@
 package com.tedameda.ticketracker.user.dto;
 
-import com.tedameda.ticketracker.user.UserPermission;
+import com.tedameda.ticketracker.user.Role;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -9,9 +9,9 @@ import lombok.NonNull;
  * @since 2/6/2024
  */
 @Data
-public class UpdatePermissionRequest {
+public class UpdateRoleRequest {
     @NonNull
     private String email;
     @NonNull
-    private UserPermission permission;
+    private Role role;
 }

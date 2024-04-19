@@ -2,7 +2,7 @@ package com.tedameda.ticketracker.user;
 
 import com.tedameda.ticketracker.common.dto.ErrorResponseDTO;
 import com.tedameda.ticketracker.department.DepartmentService;
-import com.tedameda.ticketracker.security.JWTService;
+import com.tedameda.ticketracker.security.JwtUtils;
 import com.tedameda.ticketracker.user.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,21 +21,19 @@ import java.net.URI;
 public class UserController {
     UserService userService;
     ModelMapper modelMapper;
-    JWTService jwtService;
 
-    public UserController(UserService userService, ModelMapper modelMapper, JWTService jwtService) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.jwtService = jwtService;
     }
 
-    @PostMapping("")
+    @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody CreateUserRequest request) {
         UserEntity savedUser = userService.createUser(request);
         URI savedUserURI = URI.create("/users/" + savedUser.getId());
         UserResponse userResponse = modelMapper.map(savedUser, UserResponse.class);
         userResponse.setToken(
-                jwtService.createJwt(savedUser.getId())
+                JwtUtils.generateJWTToken(savedUser.getEmail())
         );
         return ResponseEntity.created(savedUserURI).body(userResponse);
     }
@@ -44,26 +42,26 @@ public class UserController {
     public ResponseEntity<UserResponse> longinUser(@RequestBody UserLoginRequest request) {
         var user = userService.loginUser(request);
         UserResponse userResponse = modelMapper.map(user, UserResponse.class);
-        userResponse.setToken(jwtService.createJwt(user.getId()));
+        userResponse.setToken(JwtUtils.generateJWTToken(user.getEmail()));
         return ResponseEntity.ok(userResponse);
     }
 
-    @PutMapping("/update-password")
-    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest request, @AuthenticationPrincipal UserEntity user) {
-        var updatedUser = userService.updatePassword(request, user.getId());
-        return ResponseEntity.ok("Password Updated");
-    }
-
-    @PutMapping("/update-permission")
-    public ResponseEntity<String> updatePermission(@RequestBody UpdatePermissionRequest request, @AuthenticationPrincipal UserEntity user) {
-        UserEntity updatedUser = userService.changePermission(user.getId(), request);
-        return ResponseEntity.ok("Permission Updated");
+    @PutMapping("/update-role")
+    public ResponseEntity<String> updateRole(@RequestBody UpdateRoleRequest request) {
+        UserEntity updatedUser = userService.changePermission(request);
+        return ResponseEntity.ok("Role Updated");
     }
 
     @PutMapping("/update-user")
     public ResponseEntity<String> updateUser(@RequestBody UpdateDetailsRequest request, @AuthenticationPrincipal UserEntity user) {
         UserEntity updatedUser = userService.updateUser(user.getId(), request);
         return ResponseEntity.ok("User details updated");
+    }
+
+    @PutMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequest request, @AuthenticationPrincipal UserEntity user) {
+        var updatedUser = userService.updatePassword(request, user.getId());
+        return ResponseEntity.ok("Password Updated");
     }
 
     @ExceptionHandler({

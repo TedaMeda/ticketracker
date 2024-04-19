@@ -1,6 +1,5 @@
 package com.tedameda.ticketracker.user.dto;
 
-import com.tedameda.ticketracker.user.UserPermission;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

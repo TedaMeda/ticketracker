@@ -6,6 +6,7 @@ package com.tedameda.ticketracker.ticket;
  */
 public enum TicketStatus {
     NOT_ASSIGNED,
+    ASSIGNED,
     ACTIVE,
     CLOSED;
 }

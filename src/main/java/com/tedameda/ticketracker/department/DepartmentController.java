@@ -34,7 +34,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{department-name}")
-    public ResponseEntity<DepartmentEntity> getDepartmentByID(@PathVariable(name = "department-name") String departmentName) {
+    public ResponseEntity<DepartmentEntity> getDepartmentByName(@PathVariable(name = "department-name") String departmentName) {
         DepartmentEntity department = departmentService.getDepartment(departmentName);
         return ResponseEntity.ok(department);
     }
@@ -46,7 +46,7 @@ public class DepartmentController {
         return ResponseEntity.created(uri).body(department);
     }
 
-    @DeleteMapping("{department-name}")
+    @DeleteMapping("/{department-name}")
     public ResponseEntity<String> deleteDepartment(@PathVariable(name = "department-name") String departmentName) {
         departmentService.deleteDepartment(departmentName);
         return ResponseEntity.ok("Department Deleted");

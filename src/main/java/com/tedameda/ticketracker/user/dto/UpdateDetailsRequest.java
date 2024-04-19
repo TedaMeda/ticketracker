@@ -1,11 +1,7 @@
 package com.tedameda.ticketracker.user.dto;
 
-import com.tedameda.ticketracker.department.DepartmentEntity;
-import com.tedameda.ticketracker.user.UserPermission;
+import com.tedameda.ticketracker.user.Role;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 /**
@@ -22,6 +18,4 @@ public class UpdateDetailsRequest {
     private String location;
     @Nullable
     private String department;
-    @Nullable
-    private UserPermission permission;
 }

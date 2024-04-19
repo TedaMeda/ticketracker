@@ -3,6 +3,7 @@ package com.tedameda.ticketracker.ticket;
 import com.tedameda.ticketracker.department.DepartmentEntity;
 import com.tedameda.ticketracker.department.DepartmentService;
 import com.tedameda.ticketracker.ticket.dto.CreateTicketRequest;
+import com.tedameda.ticketracker.user.UserEntity;
 import com.tedameda.ticketracker.user.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -39,15 +40,35 @@ public class TicketService {
         ticket.setStatus(TicketStatus.NOT_ASSIGNED);
         return ticketRepository.save(ticket);
     }
+
     public List<TicketEntity> getAllTickets(int pageNo, int pageSize){
         PageRequest pageRequest = PageRequest.of(pageNo,pageSize, Sort.by("createdDate").descending().and(Sort.by("lastModifyDate").descending()));
         Page<TicketEntity> tickets = ticketRepository.findAll(pageRequest);
         return tickets.getContent();
     }
+
+    public List<TicketEntity> getAllTicketsByUserId(UserEntity user){
+        var tickets = ticketRepository.findAllByCreatedBy(user);
+        return tickets;
+    }
+
     public List<TicketEntity> getTicketByDepartment(String departmentName, int pageNo, int pageSize) {
         var department = departmentService.getDepartment(departmentName);
         PageRequest pageRequest = PageRequest.of(pageNo, pageSize);
         Page<TicketEntity> tickets = ticketRepository.findAllByDepartment(department,pageRequest);
         return tickets.getContent();
+    }
+
+    public TicketEntity assignTicketToUser(Long ticketId, Long userId){
+        var user = userService.getUser(userId);
+        var ticket = ticketRepository.getReferenceById(ticketId);
+        ticket.setAssignToUser(user);
+        ticket.setStatus(TicketStatus.ASSIGNED);
+        return ticketRepository.save(ticket);
+    }
+    public TicketEntity updateStatus(Long ticketId, TicketStatus status){
+        var ticket = ticketRepository.getReferenceById(ticketId);
+        ticket.setStatus(status);
+        return ticket;
     }
 }

@@ -34,15 +34,16 @@ public class UserService {
         return user;
     }
 
-    public UserPermission getPermission(Long userId) {
-        UserPermission permission = userRepository.findById(userId).get().getPermission();
-        return permission;
+    public Role getRole(Long userId) {
+        Role role = userRepository.findById(userId).get().getRole();
+        return role;
     }
 
     public UserEntity createUser(CreateUserRequest request) {
         UserEntity user = modelMapper.map(request, UserEntity.class);
-        user.setPassword(passwordEncoder.encode("1#Password"));
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setDepartment(departmentService.getDepartment(request.getDepartment()));
+        user.setRole(Role.USER);
         return userRepository.save(user);
     }
 
@@ -64,12 +65,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserEntity changePermission(Long requestedByUserId, UpdatePermissionRequest request) {
-        if (getPermission(requestedByUserId) != UserPermission.ASSIGN_TICKET) {
-            throw new UnauthorizedUserException();
-        }
+    public UserEntity changePermission(UpdateRoleRequest request) {
         UserEntity requestedFor = getUser(request.getEmail());
-        requestedFor.setPermission(request.getPermission());
+        requestedFor.setRole(request.getRole());
         return userRepository.save(requestedFor);
     }
 
@@ -87,9 +85,6 @@ public class UserService {
         if (request.getDepartment() != null) {
             user.setDepartment(departmentService.getDepartment(request.getDepartment()));
         }
-        if (request.getPermission() != null) {
-            user.setPermission(request.getPermission());
-        }
         return userRepository.save(user);
     }
 
@@ -106,7 +101,7 @@ public class UserService {
 
     static class InvalidCredentialsException extends IllegalArgumentException {
         public InvalidCredentialsException() {
-            super("Invalid username or password");
+            super("Invalid email or password");
         }
     }
 

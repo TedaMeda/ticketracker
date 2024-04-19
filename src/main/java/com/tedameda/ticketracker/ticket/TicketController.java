@@ -36,7 +36,9 @@ public class TicketController {
 
     @GetMapping("")
     public ResponseEntity<List<TicketEntity>> getAllTickets(
-            @RequestParam(required = false) String departmentName,
+            @RequestParam(name = "department",required = false) String departmentName,
+            @RequestParam(name = "requestType", required = false) String requestType,
+            @RequestParam(name = "status", required = false) String status,
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize
     ){
@@ -48,4 +50,21 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @GetMapping("/my-ticket")
+    public ResponseEntity<List<TicketEntity>> getUserAllTicket(@AuthenticationPrincipal UserEntity user){
+        var tickets = ticketService.getAllTicketsByUserId(user);
+        return ResponseEntity.ok(tickets);
+    }
+
+    @PutMapping("/{ticket-id}/assign-ticket")
+    public ResponseEntity<TicketEntity> assignTicket(@PathVariable(name = "ticket-id") Long ticketId, Long userId){
+        var ticket = ticketService.assignTicketToUser(ticketId,userId);
+        return ResponseEntity.ok(ticket);
+    }
+
+    @PutMapping("/{ticket-id}/update-status")
+    public ResponseEntity<TicketEntity> updateTicketStatus(@PathVariable(name="ticket-id") Long ticketId, TicketStatus ticketStatus){
+        var ticket = ticketService.updateStatus(ticketId,ticketStatus);
+        return ResponseEntity.ok(ticket);
+    }
 }

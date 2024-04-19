@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
 
@@ -43,9 +44,11 @@ public class TicketEntity {
     private String title;
     @NonNull
     private String description;
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_type", nullable = false)
     private RequestType requestType;
     @NonNull
+    @Enumerated(EnumType.STRING)
     private TicketStatus status;
     @ManyToOne
     @JoinColumn(name = "department_name", nullable = false)

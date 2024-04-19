@@ -1,6 +1,6 @@
 package com.tedameda.ticketracker.user.dto;
 
-import com.tedameda.ticketracker.user.UserPermission;
+import com.tedameda.ticketracker.user.Role;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +18,8 @@ public class CreateUserRequest {
     @NonNull
     private String name;
     @NonNull
+    private String password;
+    @NonNull
     private String email;
     @Nullable
     private String countryCode;
@@ -27,6 +29,4 @@ public class CreateUserRequest {
     private String location;
     @NonNull
     private String department;
-    @NonNull
-    private UserPermission permission;
 }
