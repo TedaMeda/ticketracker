@@ -9,7 +9,7 @@
 # Use a Gradle image as the build environment
 # Use a base image with OpenJDK 17 and Gradle
 # Use a base image with OpenJDK 17 and Gradle
-FROM adoptopenjdk/openjdk17:alpine AS builder
+FROM gradle:7.2.0-jdk17 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
