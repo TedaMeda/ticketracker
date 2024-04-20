@@ -33,7 +33,7 @@ RUN chmod +x gradlew
 RUN ./gradlew build
 
 # Use a slim OpenJDK image for the runtime environment
-FROM adoptopenjdk/openjdk17:alpine-jre AS runtime
+FROM openjdk:11-jre-slim AS runtime
 
 # Set the working directory in the container
 WORKDIR /app
