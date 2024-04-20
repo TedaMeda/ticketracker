@@ -1,8 +1,3 @@
-FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-
 #FROM gradle:7.2.0-jdk17 AS build
 #COPY . .
 #RUN gradle build -x test
@@ -11,3 +6,7 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 #COPY --from=build /target/ticketracker-0.0.1-SNAPSHOT.jar ticketracker.jar
 #EXPOSE 8080
 #ENTRYPOINT ["java","-jar","ticketracker.jar"]
+FROM azul/zulu-openjdk:17-latest
+VOLUME /tmp
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
