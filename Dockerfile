@@ -18,11 +18,6 @@ WORKDIR /app
 COPY gradlew .
 COPY gradle gradle
 
-# Copy the project files needed for dependency resolution
-COPY build.gradle .
-COPY settings.gradle .
-COPY gradle.properties .
-
 # Copy the entire project directory into the container
 COPY . .
 
