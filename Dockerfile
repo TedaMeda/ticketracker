@@ -8,6 +8,6 @@
 #ENTRYPOINT ["java","-jar","ticketracker.jar"]
 FROM openjdk:11-jre-slim
 WORKDIR /app
-COPY build/libs/*.jar ./ticketracker.jar
+COPY ticketracker-0.0.1-SNAPSHOT.jar ./ticketracker.jar
 EXPOSE 8080
 CMD ["java", "-jar", "your-application-name.jar"]
