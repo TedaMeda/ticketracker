@@ -6,7 +6,8 @@
 #COPY --from=build /target/ticketracker-0.0.1-SNAPSHOT.jar ticketracker.jar
 #EXPOSE 8080
 #ENTRYPOINT ["java","-jar","ticketracker.jar"]
-FROM azul/zulu-openjdk:17-latest
-VOLUME /tmp
-COPY /*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:11-jre-slim
+WORKDIR /app
+COPY build/libs/*.jar ./ticketracker.jar
+EXPOSE 8080
+CMD ["java", "-jar", "your-application-name.jar"]
