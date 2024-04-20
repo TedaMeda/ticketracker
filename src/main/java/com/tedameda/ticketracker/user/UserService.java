@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public UserEntity getUser(Long id) {
-        UserEntity user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return user;
     }
 
@@ -43,7 +43,11 @@ public class UserService {
         UserEntity user = modelMapper.map(request, UserEntity.class);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setDepartment(departmentService.getDepartment(request.getDepartment()));
-        user.setRole(Role.USER);
+        if (request.getRole() == null) {
+            user.setRole(Role.USER);
+        } else {
+            user.setRole(request.getRole());
+        }
         return userRepository.save(user);
     }
 

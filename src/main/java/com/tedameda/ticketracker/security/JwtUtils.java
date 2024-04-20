@@ -51,7 +51,7 @@ public class JwtUtils {
 
     public static String generateJWTToken(String userEmail) {
         var curDate = new Date();
-        var expirationTimeMillis = curDate.getTime() + (10 * 60 * 1000); // 10 minutes in milliseconds
+        var expirationTimeMillis = curDate.getTime() + (6* 60 * 60 * 1000); // 6 hours in milliseconds
         var expirationDate = new Date(expirationTimeMillis);
         var jwt = Jwts.builder()
                 .id(userEmail)

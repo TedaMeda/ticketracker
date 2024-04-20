@@ -29,4 +29,6 @@ public class CreateUserRequest {
     private String location;
     @NonNull
     private String department;
+    @Nullable
+    private Role role;
 }

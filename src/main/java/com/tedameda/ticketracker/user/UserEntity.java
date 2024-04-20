@@ -27,7 +27,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user", uniqueConstraints = {
-        @UniqueConstraint(name = "email_name", columnNames = {"email"})
+        @UniqueConstraint(name = "email_name", columnNames = {"user_email"})
 })
 public class UserEntity implements UserDetails {
     @Id

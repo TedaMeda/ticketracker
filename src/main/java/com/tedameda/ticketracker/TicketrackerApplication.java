@@ -18,6 +18,7 @@ public class TicketrackerApplication {
 		return new ModelMapper();
 	}
 
+
 	/*@Bean
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();

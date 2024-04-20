@@ -29,7 +29,13 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody CreateUserRequest request) {
-        UserEntity savedUser = userService.createUser(request);
+
+        UserEntity savedUser = null;
+        try {
+            savedUser = userService.createUser(request);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         URI savedUserURI = URI.create("/users/" + savedUser.getId());
         UserResponse userResponse = modelMapper.map(savedUser, UserResponse.class);
         userResponse.setToken(

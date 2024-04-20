@@ -22,4 +22,5 @@ public class UserResponse {
     private String location;
     private String permission;
     private String token;
+    private String role;
 }
