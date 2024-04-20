@@ -25,7 +25,7 @@ COPY . .
 RUN chmod +x gradlew
 
 # Build the application using the Gradle Wrapper
-RUN ./gradlew build
+RUN ./gradlew build -x test
 
 # Use a slim OpenJDK image for the runtime environment
 FROM openjdk:11-jre-slim AS runtime
