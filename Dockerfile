@@ -39,10 +39,10 @@ FROM adoptopenjdk/openjdk17:alpine-jre AS runtime
 WORKDIR /app
 
 # Copy the JAR file built in the previous stage into the current stage
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar ticketracker.jar
 
 # Expose port 8080
 EXPOSE 8080
 
 # Define the command to run the application when the container starts
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "ticketracker.jar"]
