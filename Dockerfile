@@ -7,19 +7,33 @@
 #EXPOSE 8080
 #ENTRYPOINT ["java","-jar","ticketracker.jar"]
 # Use a Gradle image as the build environment
-FROM gradle:7.2.0-jdk17 AS builder
+# Use a base image with OpenJDK 17 and Gradle
+# Use a base image with OpenJDK 17 and Gradle
+FROM adoptopenjdk/openjdk17:alpine AS builder
 
 # Set the working directory in the container
 WORKDIR /app
 
+# Copy the Gradle Wrapper files into the container
+COPY gradlew .
+COPY gradle gradle
+
+# Copy the project files needed for dependency resolution
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradle.properties .
+
 # Copy the entire project directory into the container
 COPY . .
 
-# Build the application, excluding tests
-RUN gradle build -x test
+# Ensure Gradle Wrapper and scripts have execution permissions
+RUN chmod +x gradlew
+
+# Build the application using the Gradle Wrapper
+RUN ./gradlew build
 
 # Use a slim OpenJDK image for the runtime environment
-FROM openjdk:17.0.1-jdk-slim AS runtime
+FROM adoptopenjdk/openjdk17:alpine-jre AS runtime
 
 # Set the working directory in the container
 WORKDIR /app
@@ -31,4 +45,4 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
 
 # Define the command to run the application when the container starts
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
