@@ -6,18 +6,34 @@
 
 * New user can signup
 * User able to login using username and password
-* Only authorized user(s) able to write article(s)
-* User able to read comment(s)
-* Only authorized user(s) able to write comment(s)
+* Only authorized(role based authentication) user(s) able to update other user(s) role
+* Only authorized user(s) able to create ticket(s)
+
+## Tools and Technologies
+
+* Spring boot
+* Spring security
+* Spring data JPA
+* Gradle
+* MySQL DB
+* AWS RDS for prod
+* JWT
+* Lombok
+* Model mapper
 
 ## APIs
 | Method     | URL                                                    | Description                              |Security                                        |
 | --------   | -------------------------------------------------------| -----------------------------------------| -----------------------------------------------|
-| `POST`     | `/users`                                               | Create new user                          |`None`                                          |
+| `POST`     | `/users/register`                                      | Register new user                        |`None`                                          |
 | `POST`     | `/users/login`                                         | Login existing user                      |`None`                                          |
-| `GET`      | `/articles`                                            | Get all articles                         |`None`                                          |
-| `GET`      | `/articles/{article-slug}`                             | Get article by slug name                 |`None`                                          |
-| `PATCH`    | `/articles/{article-slug}`                             | Update article by slug name              |`Authentication` `Personalization`              |
-| `GET`      | `/articles/{article-slug}/comments`                    | Get article comments by slug name        |`pagination`                                    |
-| `POST`     | `/articles/{article-slug}/comments`                    | Write comments on article                |`Authentication`                                |
-| `DELETE`   | `/articles/{article-slug}/comments/{comment-id}`       |Delete #comment-id comments from article  |`Authentication` `Personalization`              |
+| `PUT`      | `/users/update-role`                                   | Update user's role                       |`Authentication`                                |
+| `PUT`      | `/users/update-user`                                   | Update user's details                    |`Authentication` `Personalization`              |
+| `PUT`      | `/users/update-password`                               | Update user's password                   |`Authentication` `Personalization`              |
+| `POST`     | `/departments`                                         | Create new department                    |`Authentication`                                |
+| `GET`      | `/departments`                                         | Get all departments                      |`Authentication`                                |
+| `DELETE`   | `/departments/{department-name}`                       | Delete department                        |`Authentication`                                |
+| `POST`     | `/tickets`                                             | Create new ticket                        |`Authentication`                                |
+| `GET`      | `/tickets`                                             | Get all tickets                          |`Authentication` `Pagination` `Filter`          |
+| `GET`      | `/tickets/my-ticket`                                   | Get all tickets created by user          |`Authentication` `Personalization`              |
+| `PUT`      | `/tickets/{ticket-id}/assign-ticket`                   | Assign ticket to user                    |`Authentication`                                |
+| `PUT`      | `/tickets/{ticket-id}/update-status`                   | Update ticket status                     |`Authentication`                                |
